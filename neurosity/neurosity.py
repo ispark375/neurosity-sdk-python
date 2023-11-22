@@ -24,7 +24,8 @@ class NeurositySDK:
         # register a signal handler for Forced Terminal Kills
         signal.signal(signal.SIGTERM, self.exit_handler)
         signal.signal(signal.SIGINT, self.exit_handler)
-        signal.signal(signal.SIGHUP, self.exit_handler)
+        if hasattr(signal, 'SIGHUP'):
+            signal.signal(signal.SIGHUP, self.exit_handler)
 
     def exit_handler(self, signum=None, frame=None):
         self.remove_client()
